@@ -7,6 +7,12 @@
     <groupId>com.mac</groupId>
     <artifactId>parent-spzx</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>spzx-common</module>
+        <module>spzx-model</module>
+        <module>spzx-manager</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
