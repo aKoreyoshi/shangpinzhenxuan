@@ -4,10 +4,13 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mac.spzx.common.exception.KoreyoshiException;
 import com.mac.spzx.manager.mapper.SysUserMapper;
 import com.mac.spzx.manager.service.SysUserService;
 import com.mac.spzx.model.dto.system.LoginDto;
+import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
 import com.mac.spzx.model.vo.common.ResultCodeEnum;
 import com.mac.spzx.model.vo.system.LoginVo;
@@ -18,6 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +45,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     /**
      * 用户登录
-     *
      * @param loginDto
      * @return
      */
@@ -138,5 +141,67 @@ public class SysUserServiceImpl implements SysUserService {
     public void logout(String token) {
         // 退出登录只需要删除Redis中的用户信息
         redisTemplate.delete(Constants.SYSUSER_TOKEN + token);
+    }
+
+    /**
+     * 获取用户列表
+     * @param currentPage
+     * @param pageSize
+     * @param sysUserDto
+     * @return
+     */
+    @Override
+    public PageInfo<SysUser> getUserList(Integer currentPage, Integer pageSize, SysUserDto sysUserDto) {
+        // 开启分页
+        PageHelper.startPage(currentPage, pageSize);
+        // 查询用户列表
+        List<SysUser> userList = sysUserMapper.selectUserList(sysUserDto);
+        // 获取分页信息
+        PageInfo<SysUser> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
+    }
+
+    /**
+     * 添加用户
+     * @param sysUser
+     */
+    @Override
+    public void addUser(SysUser sysUser) {
+        // 先根据用户名查询用户是否存在
+        SysUser user = sysUserMapper.selectUserByUserName(sysUser.getUserName());
+        if (user != null) {
+            throw new KoreyoshiException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+        // 对密码做加密处理
+        String password = sysUser.getPassword();
+        String MD5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+        sysUser.setPassword(MD5Password);
+        // TODO 为什么状态设置为0？
+        sysUser.setStatus(1);
+        // 执行添加操作
+        sysUserMapper.insertUser(sysUser);
+    }
+
+    /**
+     * 修改用户信息
+     * @param sysUser
+     */
+    @Override
+    public void updateUser(SysUser sysUser) {
+        // 对密码做加密处理
+//        String password = sysUser.getPassword();
+//        String MD5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+//        sysUser.setPassword(MD5Password);
+        // 执行修改操作
+        sysUserMapper.updateById(sysUser);
+    }
+
+    /**
+     * 删除用户 根据id
+     * @param id
+     */
+    @Override
+    public void deleteById(Long id) {
+        sysUserMapper.deleteById(id);
     }
 }

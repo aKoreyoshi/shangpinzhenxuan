@@ -1,6 +1,8 @@
 package com.mac.spzx.manager.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mac.spzx.model.dto.system.LoginDto;
+import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
 import com.mac.spzx.model.vo.system.LoginVo;
 import com.mac.spzx.model.vo.system.ValidateCodeVo;
@@ -23,4 +25,16 @@ public interface SysUserService {
 
     // 退出登录
     void logout(String token);
+
+    // 获取用户列表
+    PageInfo<SysUser> getUserList(Integer currentPage, Integer pageSize, SysUserDto sysUserDto);
+
+    // 新增用户
+    void addUser(SysUser sysUser);
+
+    // 修改用户
+    void updateUser(SysUser sysUser);
+
+    // 删除用户
+    void deleteById(Long id);
 }

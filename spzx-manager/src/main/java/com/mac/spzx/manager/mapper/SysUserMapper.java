@@ -1,7 +1,10 @@
 package com.mac.spzx.manager.mapper;
 
+import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author: Koreyoshi
@@ -12,4 +15,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUserMapper {
     SysUser selectUserByUserName(String username);
+
+    List<SysUser> selectUserList(SysUserDto sysUserDto);
+
+    void insertUser(SysUser sysUser);
+
+    void updateById(SysUser sysUser);
+
+    void deleteById(Long id);
 }
