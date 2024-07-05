@@ -1,6 +1,7 @@
 package com.mac.spzx.manager.service;
 
 import com.github.pagehelper.PageInfo;
+import com.mac.spzx.model.dto.system.AssignRoleDto;
 import com.mac.spzx.model.dto.system.LoginDto;
 import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
@@ -37,4 +38,7 @@ public interface SysUserService {
 
     // 删除用户
     void deleteById(Long id);
+
+    // 分配角色
+    void doAssignRole(AssignRoleDto assignRoleDto);
 }

@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.mac.spzx.model.dto.system.SysRoleDto;
 import com.mac.spzx.model.entity.system.SysRole;
 
+import java.util.Map;
+
 /**
  * @author: Koreyoshi
  * @version: 1.0
@@ -12,7 +14,7 @@ import com.mac.spzx.model.entity.system.SysRole;
 public interface SysRoleService {
 
     // 条件分页查询
-    PageInfo<SysRole> getRoleList(Integer currentPage, Integer pageSize, SysRoleDto sysRoleDto);
+    PageInfo<SysRole> findRolePage(Integer currentPage, Integer pageSize, SysRoleDto sysRoleDto);
 
     // 添加角色
     void saveRole(SysRole sysRole);
@@ -22,4 +24,7 @@ public interface SysRoleService {
 
     // 根据id删除角色
     void removeRoleById(Long id);
+
+    // 获取角色列表
+    Map<String, Object> getRoleList(Long userId);
 }

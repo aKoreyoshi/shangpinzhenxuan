@@ -26,3 +26,9 @@ spzx:
     noAuthUrls:
       - /admin/system/index/login
       - /admin/system/index/generateCaptcha
+
+  minio:
+    endpoint: http://127.0.0.1:9000
+    accessKey: minioadmin
+    secretKey: minioadmin
+    bucketName: mac-spzx

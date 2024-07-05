@@ -12,6 +12,8 @@ import org.simpleframework.xml.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author: Koreyoshi
  * @description:
@@ -32,11 +34,11 @@ public class SysRoleController {
     }
 
     @Operation(summary = "获取角色列表")
-    @GetMapping("/getRoleList/{currentPage}/{pageSize}")
-    public Result getRoleList(@PathVariable("currentPage") Integer currentPage,
+    @GetMapping("/findRolePage/{currentPage}/{pageSize}")
+    public Result findRolePage(@PathVariable("currentPage") Integer currentPage,
                               @PathVariable("pageSize") Integer pageSize,
                               SysRoleDto sysRoleDto) {
-        PageInfo<SysRole> pageInfo = sysRoleService.getRoleList(currentPage, pageSize, sysRoleDto);
+        PageInfo<SysRole> pageInfo = sysRoleService.findRolePage(currentPage, pageSize, sysRoleDto);
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
 
@@ -59,5 +61,12 @@ public class SysRoleController {
     public Result removeRole(@PathVariable("id") Long id) {
         sysRoleService.removeRoleById(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "获取角色列表")
+    @GetMapping("/getRoleList/{userId}")
+    public Result getRoleList(@PathVariable("userId") Long userId) {
+        Map<String, Object> roleMap = sysRoleService.getRoleList(userId);
+        return Result.build(roleMap, ResultCodeEnum.SUCCESS);
     }
 }

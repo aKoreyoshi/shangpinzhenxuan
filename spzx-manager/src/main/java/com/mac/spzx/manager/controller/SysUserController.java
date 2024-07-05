@@ -2,6 +2,7 @@ package com.mac.spzx.manager.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.manager.service.SysUserService;
+import com.mac.spzx.model.dto.system.AssignRoleDto;
 import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
 import com.mac.spzx.model.vo.common.Result;
@@ -56,6 +57,13 @@ public class SysUserController {
     @DeleteMapping("/deleteUser/{id}")
     public Result deleteUser(@PathVariable("id") Long id) {
         sysUserService.deleteById(id);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "分配角色")
+    @PostMapping("/doAssignRole")
+    public Result doAssignRole(@RequestBody AssignRoleDto assignRoleDto) {
+        sysUserService.doAssignRole(assignRoleDto);
         return Result.build(null,ResultCodeEnum.SUCCESS);
     }
 }

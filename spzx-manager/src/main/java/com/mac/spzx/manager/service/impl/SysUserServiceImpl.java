@@ -8,7 +8,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.common.exception.KoreyoshiException;
 import com.mac.spzx.manager.mapper.SysUserMapper;
+import com.mac.spzx.manager.mapper.SysUserRoleMapper;
 import com.mac.spzx.manager.service.SysUserService;
+import com.mac.spzx.model.dto.system.AssignRoleDto;
 import com.mac.spzx.model.dto.system.LoginDto;
 import com.mac.spzx.model.dto.system.SysUserDto;
 import com.mac.spzx.model.entity.system.SysUser;
@@ -36,11 +38,15 @@ public class SysUserServiceImpl implements SysUserService {
 
     private SysUserMapper sysUserMapper;
     private RedisTemplate<String, String> redisTemplate;
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Autowired
-    public SysUserServiceImpl(SysUserMapper sysUserMapper,RedisTemplate<String, String> redisTemplate) {
+    public SysUserServiceImpl(SysUserMapper sysUserMapper,
+                              RedisTemplate<String, String> redisTemplate,
+                              SysUserRoleMapper sysUserRoleMapper) {
         this.sysUserMapper = sysUserMapper;
         this.redisTemplate = redisTemplate;
+        this.sysUserRoleMapper = sysUserRoleMapper;
     }
 
     /**
@@ -203,5 +209,22 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void deleteById(Long id) {
         sysUserMapper.deleteById(id);
+    }
+
+    /**
+     * 分配角色
+     * @param assignRoleDto
+     */
+    @Override
+    public void doAssignRole(AssignRoleDto assignRoleDto) {
+        // 首先删除已经分配的角色
+        Long userId = assignRoleDto.getUserId();
+        sysUserRoleMapper.deleteByUserId(userId);
+        // 执行分配操作
+        List<Long> roleIdList = assignRoleDto.getRoleIdList();
+        for (Long roleId : roleIdList) {
+            sysUserRoleMapper.assignRole(userId, roleId);
+        }
+
     }
 }

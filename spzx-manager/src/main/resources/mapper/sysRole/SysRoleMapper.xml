@@ -40,7 +40,7 @@
     </update>
 
     <!--分页查询-->
-    <select id="getRoleList" resultType="com.mac.spzx.model.entity.system.SysRole">
+    <select id="findRolePage" resultType="com.mac.spzx.model.entity.system.SysRole">
         select
         <include refid="select_column"/>
         from sys_role
@@ -51,5 +51,13 @@
             and is_deleted = 0
         </where>
         order by id desc
+    </select>
+
+    <!--获取角色列表-->
+    <select id="getRoleList" resultType="com.mac.spzx.model.entity.system.SysRole">
+        select
+        <include refid="select_column"/>
+        from sys_role
+        where is_deleted = 0
     </select>
 </mapper>
