@@ -1,6 +1,7 @@
 package com.mac.spzx.manager.service;
 
 import com.github.pagehelper.PageInfo;
+import com.mac.spzx.model.dto.system.AssignMenuDto;
 import com.mac.spzx.model.dto.system.SysRoleDto;
 import com.mac.spzx.model.entity.system.SysRole;
 
@@ -27,4 +28,6 @@ public interface SysRoleService {
 
     // 获取角色列表
     Map<String, Object> getRoleList(Long userId);
+
+    void doAssignMenu(AssignMenuDto assignMenuDto);
 }

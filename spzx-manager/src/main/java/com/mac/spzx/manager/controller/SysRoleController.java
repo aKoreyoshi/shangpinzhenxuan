@@ -2,13 +2,13 @@ package com.mac.spzx.manager.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.manager.service.SysRoleService;
+import com.mac.spzx.model.dto.system.AssignMenuDto;
 import com.mac.spzx.model.dto.system.SysRoleDto;
 import com.mac.spzx.model.entity.system.SysRole;
 import com.mac.spzx.model.vo.common.Result;
 import com.mac.spzx.model.vo.common.ResultCodeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.simpleframework.xml.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,5 +68,12 @@ public class SysRoleController {
     public Result getRoleList(@PathVariable("userId") Long userId) {
         Map<String, Object> roleMap = sysRoleService.getRoleList(userId);
         return Result.build(roleMap, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "为角色分配菜单")
+    @PostMapping("/doAssignMenu")
+    public Result doAssignMenu(@RequestBody AssignMenuDto assignMenuDto) {
+        sysRoleService.doAssignMenu(assignMenuDto);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 }

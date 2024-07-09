@@ -3,8 +3,10 @@ package com.mac.spzx.manager.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.manager.mapper.SysRoleMapper;
+import com.mac.spzx.manager.mapper.SysRoleMenuMapper;
 import com.mac.spzx.manager.mapper.SysUserRoleMapper;
 import com.mac.spzx.manager.service.SysRoleService;
+import com.mac.spzx.model.dto.system.AssignMenuDto;
 import com.mac.spzx.model.dto.system.SysRoleDto;
 import com.mac.spzx.model.entity.system.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +28,20 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     private SysRoleMapper sysRoleMapper;
     private SysUserRoleMapper sysUserRoleMapper;
+    private SysRoleMenuMapper sysRoleMenuMapper;
+
     @Autowired
     public SysRoleServiceImpl(SysRoleMapper sysRoleMapper,
-                              SysUserRoleMapper sysUserRoleMapper) {
+                              SysUserRoleMapper sysUserRoleMapper,
+                              SysRoleMenuMapper sysRoleMenuMapper) {
         this.sysRoleMapper = sysRoleMapper;
         this.sysUserRoleMapper = sysUserRoleMapper;
+        this.sysRoleMenuMapper = sysRoleMenuMapper;
     }
 
     /**
      * 条件分页查询
+     *
      * @param currentPage
      * @param pageSize
      * @param sysRoleDto
@@ -53,6 +60,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     /**
      * 添加角色
+     *
      * @param sysRole
      */
     @Override
@@ -62,6 +70,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     /**
      * 修改角色
+     *
      * @param sysRole
      */
     @Override
@@ -84,5 +93,22 @@ public class SysRoleServiceImpl implements SysRoleService {
         map.put("roleList", sysRoles);
         map.put("roleIds", roleIds);
         return map;
+    }
+
+    /**
+     * 分配菜单
+     *
+     * @param assignMenuDto
+     */
+    @Override
+    public void doAssignMenu(AssignMenuDto assignMenuDto) {
+        // 删除之前分配的菜单
+        Long roleId = assignMenuDto.getRoleId();
+        sysRoleMenuMapper.deleteByRoleId(roleId);
+        // 重新分配菜单
+        List<Map<String, Number>> menuIdList = assignMenuDto.getMenuIdList();
+        if (menuIdList != null && menuIdList.size() > 0) {
+            sysRoleMenuMapper.assignMenu(assignMenuDto);
+        }
     }
 }

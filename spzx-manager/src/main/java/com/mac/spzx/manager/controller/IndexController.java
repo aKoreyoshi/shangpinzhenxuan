@@ -1,11 +1,14 @@
 package com.mac.spzx.manager.controller;
 
+import com.mac.spzx.manager.service.SysMenuService;
 import com.mac.spzx.manager.service.SysUserService;
 import com.mac.spzx.model.dto.system.LoginDto;
+import com.mac.spzx.model.entity.system.SysMenu;
 import com.mac.spzx.model.entity.system.SysUser;
 import com.mac.spzx.model.vo.common.Result;
 import com.mac.spzx.model.vo.common.ResultCodeEnum;
 import com.mac.spzx.model.vo.system.LoginVo;
+import com.mac.spzx.model.vo.system.SysMenuVo;
 import com.mac.spzx.model.vo.system.ValidateCodeVo;
 import com.mac.spzx.util.utils.AuthContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +16,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: Koreyoshi
@@ -26,9 +31,12 @@ import org.springframework.web.bind.annotation.*;
 public class IndexController {
 
     private SysUserService sysUserService;
+    private SysMenuService sysMenuService;
     @Autowired
-    public IndexController(SysUserService sysUserService) {
+    public IndexController(SysUserService sysUserService,
+                           SysMenuService sysMenuService) {
         this.sysUserService = sysUserService;
+        this.sysMenuService = sysMenuService;
     }
 
     @Operation(summary = "用户登录")
@@ -67,5 +75,12 @@ public class IndexController {
     public Result logout(@RequestHeader(name = "token") String token) {
         sysUserService.logout(token);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "动态菜单")
+    @GetMapping("/dynamicMenu")
+    public Result dynamicMenu() {
+        List<SysMenuVo> menuList = sysMenuService.dynamicMenu();
+        return Result.build(menuList, ResultCodeEnum.SUCCESS);
     }
 }

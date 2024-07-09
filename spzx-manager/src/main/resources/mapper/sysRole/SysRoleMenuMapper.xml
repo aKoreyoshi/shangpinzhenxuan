@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mac.spzx.manager.mapper.SysRoleMenuMapper">
+
+    <!--分配菜单-->
+    <insert id="assignMenu">
+        insert into sys_role_menu (role_id, menu_id,create_time,update_time,is_deleted,is_half)
+        values
+        <foreach collection="menuIdList" item="menu" separator=",">
+            (#{roleId}, #{menu.id}, now(),now(),0,#{menu.isHalf})
+        </foreach>
+    </insert>
+    <!--根据roleId删除已经分配过的角色-->
+    <delete id="deleteByRoleId">
+        delete from sys_role_menu
+        where role_id = #{roleId}
+    </delete>
+
+    <!--根据roleId查询已经分配过的菜单-->
+    <select id="selectByRoleId" resultType="java.lang.Long">
+        select menu_id
+        from sys_role_menu
+        where role_id = #{roleId}
+          and is_deleted = 0 and is_half = 0
+    </select>
+</mapper>
