@@ -6,11 +6,10 @@ import com.mac.spzx.model.vo.common.Result;
 import com.mac.spzx.model.vo.common.ResultCodeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,5 +36,18 @@ public class CategoryController {
     public Result getCategoryList(@PathVariable("parentId") Long parentId) {
         List<Category> categories = categoryService.getCategoryList(parentId);
         return Result.build(categories, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "导出数据")
+    @GetMapping("/exportData")
+    public void exportData(HttpServletResponse response) {
+        categoryService.exportData(response);
+    }
+
+    @Operation(summary = "导入数据")
+    @PostMapping("/importData")
+    public Result importData(MultipartFile file) {
+        categoryService.importData(file);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 }

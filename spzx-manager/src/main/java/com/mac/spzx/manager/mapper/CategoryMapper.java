@@ -1,6 +1,7 @@
 package com.mac.spzx.manager.mapper;
 
 import com.mac.spzx.model.entity.product.Category;
+import com.mac.spzx.model.vo.product.CategoryExcelVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface CategoryMapper {
     List<Category> selectByParentId(Long parentId);
 
     Integer selectCount(Long id);
+
+    List<Category> selectAll();
+
+    void insertBatch(List<CategoryExcelVo> cachedDataList);
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mac.spzx.manager.mapper.BrandMapper">
+
+    <!--抽离字段-->
+    <sql id="columns">
+        id
+        ,name,logo,create_time,update_time,is_deleted
+    </sql>
+
+    <!--新增品牌-->
+    <insert id="addBand">
+        insert into brand(id, name, logo, create_time, update_time, is_deleted)
+        values (#{id}, #{name}, #{logo}, now(), now(), 0)
+    </insert>
+
+    <!--修改品牌信息-->
+    <update id="updateBrand">
+        update brand
+        <set>
+        <if test="name != null and name != ''">
+        name = #{name},
+        </if>
+        <if test="logo != null and logo != ''">
+        logo = #{logo},
+        </if>
+        update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除品牌信息-->
+    <update id="deleteBrand">
+        update brand set is_deleted = 1 where id = #{id}
+    </update>
+
+    <select id="selectBrandList" resultType="com.mac.spzx.model.entity.product.Brand">
+        select
+        <include refid="columns"/>
+        from brand
+        where is_deleted = 0
+    </select>
+</mapper>

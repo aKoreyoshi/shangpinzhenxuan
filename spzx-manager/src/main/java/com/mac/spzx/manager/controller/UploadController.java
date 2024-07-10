@@ -35,4 +35,13 @@ public class UploadController {
         String url = uploadService.avatarUpload(avatar);
         return Result.build(url, ResultCodeEnum.SUCCESS);
     }
+
+    @Operation(summary = "上传品牌图标")
+    @PostMapping("/logoUpload")
+    public Result logoUpload(@RequestParam("logo") MultipartFile logo) {
+        String url = uploadService.avatarUpload(logo);
+        return Result.build(url, ResultCodeEnum.SUCCESS);
+    }
+
+
 }
