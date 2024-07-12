@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mac.spzx.manager.mapper.BrandCategoryMapper">
+
+    <!--新增-->
+    <insert id="insert">
+        insert into category_brand (id, category_id, brand_id, create_time, update_time, is_deleted)
+        values (#{id}, #{categoryId}, #{brandId}, now(), now(), 0)
+    </insert>
+
+    <!--修改-->
+    <update id="update">
+        update category_brand
+        <set>
+            <if test="categoryId != null and categoryId != ''">
+            category_id = #{categoryId},
+            </if>
+            <if test="brandId != null and brandId != ''">
+            brand_id = #{brandId},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <update id="deleteById">
+        update category_brand set is_deleted = 1,update_time = now() where id = #{id}
+    </update>
+
+
+    <!--条件查询-->
+    <select id="selectByCondition" resultType="com.mac.spzx.model.entity.product.CategoryBrand">
+        select cb.*, c.name as categoryName, b.name as brandName, b.logo
+        from category_brand cb
+        inner join category c on cb.category_id = c.id
+        inner join brand b on cb.brand_id = b.id
+        <where>
+            <if test="brandId != null and brandId != ''">
+                and cb.brand_id = #{brandId}
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                and cb.category_id = #{categoryId}
+            </if>
+            and cb.is_deleted = 0
+        </where>
+    </select>
+</mapper>

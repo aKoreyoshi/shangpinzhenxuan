@@ -3,6 +3,8 @@ package com.mac.spzx.manager.service;
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.model.entity.product.Brand;
 
+import java.util.List;
+
 /**
  * @author: Koreyoshi
  * @version: 1.0
@@ -21,4 +23,6 @@ public interface BrandService {
 
     // 删除品牌信息
     void deleteBrand(Long id);
+
+    List<Brand> brandList();
 }

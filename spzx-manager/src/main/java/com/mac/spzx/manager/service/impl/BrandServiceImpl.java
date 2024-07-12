@@ -30,7 +30,7 @@ public class BrandServiceImpl implements BrandService {
      * 分页查询品牌列表
      * @param currentPage
      * @param pageSize
-     * @return
+     * @return PageInfo<Brand>
      */
     @Override
     public PageInfo<Brand> brandPageList(Integer currentPage, Integer pageSize) {
@@ -68,5 +68,15 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public void deleteBrand(Long id) {
         brandMapper.deleteBrand(id);
+    }
+
+    /**
+     * 查询品牌列表
+     * @return
+     */
+    @Override
+    public List<Brand> brandList() {
+        List<Brand> brands = brandMapper.selectBrandList();
+        return brands;
     }
 }
