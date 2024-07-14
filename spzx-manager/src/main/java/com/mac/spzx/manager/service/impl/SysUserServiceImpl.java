@@ -21,6 +21,7 @@ import com.mac.spzx.util.constant.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.List;
@@ -215,6 +216,7 @@ public class SysUserServiceImpl implements SysUserService {
      * 分配角色
      * @param assignRoleDto
      */
+    @Transactional
     @Override
     public void doAssignRole(AssignRoleDto assignRoleDto) {
         // 首先删除已经分配的角色

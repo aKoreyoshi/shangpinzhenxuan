@@ -12,6 +12,7 @@ import com.mac.spzx.util.utils.AuthContextUtil;
 import com.mac.spzx.util.utils.MenuHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
@@ -60,6 +61,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      *
      * @param sysMenu
      */
+    @Transactional
     @Override
     public void saveMenu(SysMenu sysMenu) {
         sysMenuMapper.saveMenu(sysMenu);

@@ -11,6 +11,7 @@ import com.mac.spzx.model.dto.system.SysRoleDto;
 import com.mac.spzx.model.entity.system.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -95,11 +96,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         return map;
     }
 
+
     /**
      * 分配菜单
      *
      * @param assignMenuDto
      */
+    @Transactional
     @Override
     public void doAssignMenu(AssignMenuDto assignMenuDto) {
         // 删除之前分配的菜单

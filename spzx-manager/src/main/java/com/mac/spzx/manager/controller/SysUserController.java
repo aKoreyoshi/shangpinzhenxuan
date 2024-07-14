@@ -1,6 +1,7 @@
 package com.mac.spzx.manager.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.mac.spzx.log.annotation.Log;
 import com.mac.spzx.manager.service.SysUserService;
 import com.mac.spzx.model.dto.system.AssignRoleDto;
 import com.mac.spzx.model.dto.system.SysUserDto;
@@ -39,31 +40,33 @@ public class SysUserController {
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "新增用户", businessType = 1) //添加Log注解，设置属性
     @Operation(summary = "新增用户")
     @PostMapping("/addUser")
     public Result addUser(@RequestBody SysUser sysUser) {
         sysUserService.addUser(sysUser);
-        return Result.build(null,ResultCodeEnum.SUCCESS);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
     @Operation(summary = "修改用户")
     @PutMapping("/updateUser")
     public Result updateUser(@RequestBody SysUser sysUser) {
         sysUserService.updateUser(sysUser);
-        return Result.build(null,ResultCodeEnum.SUCCESS);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
     @Operation(summary = "根据id删除用户")
     @DeleteMapping("/deleteUser/{id}")
     public Result deleteUser(@PathVariable("id") Long id) {
         sysUserService.deleteById(id);
-        return Result.build(null,ResultCodeEnum.SUCCESS);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "分配角色", businessType = 2)
     @Operation(summary = "分配角色")
     @PostMapping("/doAssignRole")
     public Result doAssignRole(@RequestBody AssignRoleDto assignRoleDto) {
         sysUserService.doAssignRole(assignRoleDto);
-        return Result.build(null,ResultCodeEnum.SUCCESS);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 }

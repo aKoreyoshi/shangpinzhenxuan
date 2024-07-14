@@ -94,6 +94,7 @@ public class ProductServiceImpl implements ProductService {
      * @param id
      * @return Product
      */
+    @Transactional
     @Override
     public Product getProductById(Long id) {
         // 根据id查询商品数据
