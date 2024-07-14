@@ -1,5 +1,6 @@
 package com.mac.spzx.manager.mapper;
 
+import com.mac.spzx.model.entity.order.OrderStatistics;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,4 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderInfoMapper {
+    OrderStatistics queryOrder(String yesterday);
 }

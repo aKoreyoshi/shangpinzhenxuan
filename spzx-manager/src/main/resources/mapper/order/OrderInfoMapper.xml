@@ -4,4 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.spzx.manager.mapper.OrderInfoMapper">
 
+    <select id="queryOrder" resultType="com.mac.spzx.model.entity.order.OrderStatistics">
+        SELECT DATE_FORMAT(o.create_time, '%y-%m-%d') orderDate,
+               SUM(o.total_amount)                    totalAmount,
+               COUNT(o.id)                            totalNum
+        FROM order_info o
+        where DATE_FORMAT(o.create_time, '%y-%m-%d') = #{yesterday}
+    </select>
 </mapper>
