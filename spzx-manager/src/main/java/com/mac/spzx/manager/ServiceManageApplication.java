@@ -9,10 +9,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @Import(Knife4jConfig.class)
 @EnableConfigurationProperties(value = {UserAuthProperties.class, MinioProperties.class})
+@EnableScheduling
 public class ServiceManageApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceManageApplication.class, args);
