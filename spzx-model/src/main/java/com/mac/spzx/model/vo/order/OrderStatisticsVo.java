@@ -16,4 +16,7 @@ public class OrderStatisticsVo {
 
     @Schema(description = "总金额数据集合")
     private List<BigDecimal> amountList ;
+
+    @Schema(description = "总笔数数据集合")
+    private List<Integer> countList ;
 }
