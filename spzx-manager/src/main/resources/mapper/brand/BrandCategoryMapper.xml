@@ -47,4 +47,13 @@
             and cb.is_deleted = 0
         </where>
     </select>
+
+    <!--获取品牌-->
+    <select id="getBrandByCategoryId" resultType="com.mac.spzx.model.entity.product.Brand">
+        select b.id, b.name, b.logo, b.create_time, b.update_time, b.is_deleted
+        from category_brand cb
+                 right join brand b on cb.brand_id = b.id
+        where cb.category_id = #{categoryId}
+          and cb.is_deleted = 0
+    </select>
 </mapper>

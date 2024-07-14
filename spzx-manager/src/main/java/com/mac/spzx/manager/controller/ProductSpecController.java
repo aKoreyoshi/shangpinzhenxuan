@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author: Koreyoshi
  * @description:
@@ -54,5 +56,12 @@ public class ProductSpecController {
     public Result deleteSpec(@PathVariable("id") Long id) {
         productSpecService.deleteSpec(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "获取商品规格列表")
+    @GetMapping("/specList")
+    public Result specList() {
+        List<ProductSpec> list = productSpecService.specList();
+        return Result.build(list , ResultCodeEnum.SUCCESS) ;
     }
 }

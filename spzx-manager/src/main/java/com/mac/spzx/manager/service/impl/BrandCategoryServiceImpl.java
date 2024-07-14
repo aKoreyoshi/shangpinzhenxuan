@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.mac.spzx.manager.mapper.BrandCategoryMapper;
 import com.mac.spzx.manager.service.BrandCategoryService;
 import com.mac.spzx.model.dto.product.CategoryBrandDto;
+import com.mac.spzx.model.entity.product.Brand;
 import com.mac.spzx.model.entity.product.CategoryBrand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +22,15 @@ import java.util.List;
 public class BrandCategoryServiceImpl implements BrandCategoryService {
 
     private BrandCategoryMapper brandCategoryMapper;
+
+    @Autowired
     public BrandCategoryServiceImpl(BrandCategoryMapper brandCategoryMapper) {
         this.brandCategoryMapper = brandCategoryMapper;
     }
 
     /**
      * 条件分页查询品牌分类列表
+     *
      * @param currentPage
      * @param pageSize
      * @param categoryBrandDto
@@ -44,6 +49,7 @@ public class BrandCategoryServiceImpl implements BrandCategoryService {
 
     /**
      * 新增品牌分类
+     *
      * @param categoryBrand
      */
     @Override
@@ -53,6 +59,7 @@ public class BrandCategoryServiceImpl implements BrandCategoryService {
 
     /**
      * 更新品牌分类
+     *
      * @param categoryBrand
      */
     @Override
@@ -62,10 +69,22 @@ public class BrandCategoryServiceImpl implements BrandCategoryService {
 
     /**
      * 删除品牌分类
+     *
      * @param id
      */
     @Override
     public void deleteBrandCategory(Long id) {
         brandCategoryMapper.deleteById(id);
+    }
+
+    /**
+     * 根据分类id获取品牌数据
+     * @param categoryId
+     * @return List<Brand>
+     */
+    @Override
+    public List<Brand> getBrandByCategoryId(Long categoryId) {
+        List<Brand> brands = brandCategoryMapper.getBrandByCategoryId(categoryId);
+        return brands;
     }
 }

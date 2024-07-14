@@ -3,6 +3,8 @@ package com.mac.spzx.manager.service;
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.model.entity.product.ProductSpec;
 
+import java.util.List;
+
 /**
  * @author: Koreyoshi
  * @version: 1.0
@@ -21,4 +23,7 @@ public interface ProductSpecService {
 
     // 删除商品规格
     void deleteSpec(Long id);
+
+    // 获取商品规格列表
+    List<ProductSpec> specList();
 }

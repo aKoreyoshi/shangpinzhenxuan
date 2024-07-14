@@ -3,12 +3,15 @@ package com.mac.spzx.manager.controller;
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.manager.service.BrandCategoryService;
 import com.mac.spzx.model.dto.product.CategoryBrandDto;
+import com.mac.spzx.model.entity.product.Brand;
 import com.mac.spzx.model.entity.product.CategoryBrand;
 import com.mac.spzx.model.vo.common.Result;
 import com.mac.spzx.model.vo.common.ResultCodeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: Koreyoshi
@@ -56,6 +59,13 @@ public class BrandCategoryController {
     public Result deleteBrandCategory(@PathVariable("id") Long id) {
         brandCategoryService.deleteBrandCategory(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "根据分类id查询品牌数据")
+    @GetMapping("/getBrandByCategoryId/{categoryId}")
+    public Result getBrandByCategoryId(@PathVariable("categoryId") Long categoryId) {
+        List<Brand> brands = brandCategoryService.getBrandByCategoryId(categoryId);
+        return Result.build(brands, ResultCodeEnum.SUCCESS);
     }
 
 }

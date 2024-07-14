@@ -59,4 +59,15 @@ public class ProductSpecServiceImpl implements ProductSpecService {
         // 删除商品规格
         productSpecMapper.deleteSpec(id);
     }
+
+    /**
+     * 获取商品规格列表
+     * @return List
+     */
+    @Override
+    public List<ProductSpec> specList() {
+        // 获取商品规格列表
+        List<ProductSpec> list = productSpecMapper.getSpecList();
+        return list;
+    }
 }

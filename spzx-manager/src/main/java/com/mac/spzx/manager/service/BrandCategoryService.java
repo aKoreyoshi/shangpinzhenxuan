@@ -2,7 +2,10 @@ package com.mac.spzx.manager.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mac.spzx.model.dto.product.CategoryBrandDto;
+import com.mac.spzx.model.entity.product.Brand;
 import com.mac.spzx.model.entity.product.CategoryBrand;
+
+import java.util.List;
 
 /**
  * @author: Koreyoshi
@@ -22,4 +25,7 @@ public interface BrandCategoryService {
 
     // 删除
     void deleteBrandCategory(Long id);
+
+    // 根据分类id获取品牌数据
+    List<Brand> getBrandByCategoryId(Long categoryId);
 }
